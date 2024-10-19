@@ -1,7 +1,7 @@
 {
   "presets": [
     {
-      "name": "Polaris (Default)",
+      "name": "Solaris (Default)",
       "desc": "The default and recommended curve. Decently balanced.",
       "curve": { "3": 1, "2": 50, "1": 100 },
       "round": 100,
