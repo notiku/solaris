@@ -1,6 +1,6 @@
 module.exports = {
-metadata: {
+  metadata: {
     name: "Check XP",
-    slashEquivalent: "rank"
-}
-}
+    slashEquivalent: "rank",
+  },
+};
