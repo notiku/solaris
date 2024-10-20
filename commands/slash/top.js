@@ -96,12 +96,10 @@ module.exports = {
       owner: int.user.id,
       ephemeral: isHidden,
       mapFunction: (x, y, p) =>
-        `**${p})** ${x.id == highlight ? "**" : ""}Lv. ${tools.getLevel(
+        `\`${p}\` **<@${x.id}>** is **level ${tools.getLevel(
           x.xp,
           db.settings
-        )} - <@${x.id}> (${tools.commafy(x.xp)} XP)${
-          x.id == highlight ? "**" : ""
-        }`,
+        )}** (\`${tools.commafy(x.xp)} XP\`)`,
       extraButtons: [
         tools.button({
           style: "Link",
