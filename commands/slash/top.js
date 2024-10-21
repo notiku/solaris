@@ -99,7 +99,7 @@ module.exports = {
         `\`${p}\` **<@${x.id}>** is **level ${tools.getLevel(
           x.xp,
           db.settings
-        )}** (\`${tools.commafy(x.xp)} XP\`)`,
+        )}** (\`${tools.commafy(x.xp)} XP\`)${x.id == highlight ? " <--" : ""}`,
       extraButtons: [
         tools.button({
           style: "Link",

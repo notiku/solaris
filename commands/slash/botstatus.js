@@ -20,7 +20,8 @@ module.exports = {
     let totalServers = stats.reduce((a, b) => a + b.guilds, 0);
 
     let botStatus = [
-      `**Original creator:** **[Colon](https://gdcolon.com)** 🦊⛩️`,
+      `**Maintained by:** **[iku](https://iku.pet/)**`,
+      `**Original creator:** **[Colon](https://gdcolon.com/)**`,
       `**Version:** v${versionNumber} - updated <t:${Math.round(
         client.version.updated / 1000
       )}:R>`,
