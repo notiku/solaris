@@ -210,9 +210,6 @@
         $("#accountInfo [lb=percent]")
           .text(`(${+userLevel.percentage.toFixed(2)}%)`)
           .css("color", userColor);
-        $("#accountInfo [lb=ranking]").text(
-          `Ranked #${data.user.rank} in ${data.guild.name}`
-        );
         $("#accountInfo [lb=prev]").text(
           commafy(userLevel.previousLevel) + " XP"
         );

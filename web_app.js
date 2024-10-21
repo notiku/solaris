@@ -1094,7 +1094,6 @@ module.exports = (client) => {
     let userLevel = {
       id: userID,
       xp: userXP.xp,
-      rank: tools.getRank(userXP.xp, data.users),
       level: tools.getLevel(userXP.xp, settings),
       username: foundMember?.username || "Unknown",
       displayName: foundMember?.displayName || "Unknown",
