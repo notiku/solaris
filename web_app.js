@@ -127,9 +127,10 @@ module.exports = (client) => {
   app.get("/servers", (req, res) => sendPage(res, "servers"));
   app.get("/settings/:id", (req, res) => sendPage(res, "config"));
   app.get("/leaderboard/:id", (req, res) => sendPage(res, "leaderboard"));
+  app.get("/user/:guild/:id", (req, res) => sendPage(res, "user"));
   app.get("/", (req, res) => sendPage(res, "home"));
 
-  app.get(["/settings", "/leaderboard", "/servers"], (req, res) =>
+  app.get(["/settings", "/leaderboard", "/servers", "/user"], (req, res) =>
     sendRedirect(res, "/servers")
   );
 
@@ -996,6 +997,122 @@ module.exports = (client) => {
     });
   });
 
+  app.get("/api/user/:id/:userID", cors(), async function (req, res) {
+    let guildID = req.params.id;
+    let userID = req.params.userID;
+
+    let data = await client.db.fetch(guildID);
+    if (!data) return res.apiError("Invalid server!", "invalidServer");
+
+    let settings = data.settings;
+    if (!settings.enabled)
+      return res.apiError("XP is disabled in this server!", "xpDisabled");
+
+    let [userInfo, guildInfo] = await getDiscordInfo(req);
+    let loggedIn = userInfo && guildInfo && userInfo.id;
+    let isInGuild = loggedIn && guildInfo.find((x) => x.id == guildID);
+
+    let isDev = tools.isDev(userInfo);
+    let isMod =
+      loggedIn && canManageServer(guildInfo.find((x) => x.id == guildID));
+
+    if (!isMod && settings.leaderboard.disabled)
+      return res.apiError(
+        "The leaderboard is disabled in this server!",
+        "leaderboardDisabled"
+      );
+
+    // private leaderboard
+    if (settings.leaderboard.private && !isInGuild)
+      return res.apiError(
+        loggedIn
+          ? "Only server members can access this leaderboard!"
+          : "This leaderboard is private! Login is required.",
+        "privateLeaderboard"
+      );
+
+    let userXP = data.users[userID];
+    if (!userXP || !userXP.xp)
+      return res.apiError("This user isn't ranked!", "userNotRanked");
+
+    let memberList = [userID];
+    if (loggedIn && !memberList.includes(userInfo.id))
+      memberList.push(userInfo.id);
+
+    let guildData = await client.shard
+      .broadcastEval(
+        async (cl, xd) => {
+          let guild = cl.guilds.cache.get(xd.guildID);
+          if (!guild) return null;
+
+          let server = {
+            name: guild.name,
+            icon: guild.iconURL({ format: "png", dynamic: true }),
+            members: guild.memberCount,
+            owner: guild.ownerId,
+          };
+
+          let roles = guild.roles.cache
+            .filter((r) => xd.importantRoles.includes(r.id))
+            .sort((a, b) => b.position - a.position)
+            .map((x) => ({
+              id: x.id,
+              name: x.name,
+              color: x.hexColor,
+            }));
+
+          let members = await guild.members
+            .fetch({ user: xd.members })
+            .then((list) =>
+              list.map((x) => ({
+                id: x.user.id,
+                username: x.user.username,
+                displayName: x.user.displayName,
+                discriminator: x.user.discriminator || "0",
+                nickname: x.nickname,
+                avatar: x.displayAvatarURL({ format: "png", dynamic: true }),
+                color: x.displayHexColor,
+                roles: x.roles.cache
+                  .filter((r) => xd.importantRoles.includes(r.id))
+                  .map((r) => r.id),
+              }))
+            )
+            .catch(() => []);
+
+          return { server, roles, members };
+        },
+        { context: { members: memberList, guildID, importantRoles: [] } }
+      )
+      .then((x) => x.find((r) => r)) // filter out empty shards
+      .catch(console.error);
+
+    if (!guildData) return res.apiError("Couldn't get server data!");
+
+    let guildMembers = guildData.members;
+    let foundMember = guildMembers.find((x) => x.id == userID);
+
+    let userLevel = {
+      id: userID,
+      xp: userXP.xp,
+      rank: tools.getRank(userXP.xp, data.users),
+      level: tools.getLevel(userXP.xp, settings),
+      username: foundMember?.username || "Unknown",
+      displayName: foundMember?.displayName || "Unknown",
+      discriminator: foundMember?.discriminator || "0000",
+      avatar: foundMember?.avatar || "",
+      color: foundMember?.color || "#000000",
+      roles: foundMember?.roles || [],
+    };
+
+    return res.send({
+      guild: guildData.server,
+      user: userLevel,
+      settings: settings,
+      roles: guildData.roles,
+      moderator: isMod,
+    });
+  });
+
   app.post("/api/editXP", async function (req, res) {
     if (typeof req.body != "object") return res.apiError("Invalid  data!");
 
@@ -1027,7 +1144,7 @@ module.exports = (client) => {
   });
 
   app.post("/api/leaderboardHide", async function (req, res) {
-    if (typeof req.body != "object") return res.apiError("Invalid  data!");
+    if (typeof req.body != "object") return res.apiError("Invalid data!");
 
     let guildID = req.body.guildID;
     if (!guildID) return res.apiError("No guild ID!");
@@ -1138,11 +1255,8 @@ Think of these codes as a parent signed permission slip for us to get the data t
       })
         .then((x) => x.json())
         .then((data) => {
-          if (data["error"])
-            return sendRedirect(
-              res,
-              "/"
-            ); // if discord sends an error (fake code, etc)
+          if (data["error"]) return sendRedirect(res, "/");
+          // if discord sends an error (fake code, etc)
           else return storeAuthToken(res, data); // if we reach here, it means the code was valid! on to step 3!
         })
         .catch((e) => {
@@ -1281,22 +1395,18 @@ If the client wants to log out, we should probably respect that and delete their
 
   app.use(function (err, req, res, next) {
     if (err && err.message == "Response timeout")
-      res
-        .status(500)
-        .send({
-          apiError: true,
-          internalError: true,
-          message: "Internal server error! (Timed out)",
-        });
+      res.status(500).send({
+        apiError: true,
+        internalError: true,
+        message: "Internal server error! (Timed out)",
+      });
     else {
       console.warn(err);
-      res
-        .status(500)
-        .send({
-          apiError: true,
-          internalError: true,
-          message: `Internal server error! (${err.message})`,
-        });
+      res.status(500).send({
+        apiError: true,
+        internalError: true,
+        message: `Internal server error! (${err.message})`,
+      });
     }
   });
 

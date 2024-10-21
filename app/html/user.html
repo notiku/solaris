@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="/css/polaris.css?v=1" type="text/css" rel="stylesheet" />
+    <link rel="icon" href="/assets/solaris.png" />
+    <title>Rank</title>
+
+    <meta property="og:title" content="Solaris" />
+    <meta property="og:description" content="An open-source XP bot" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#FF007F" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <h2 class="middleflex" id="loading">Loading...</h2>
+
+    <div id="everything" style="display: none">
+      <div class="centerflex" style="margin-top: 10px; flex-direction: column">
+        <h1 id="serverName" style="text-align: center"></h1>
+        <p id="serverMembers" style="margin-top: 2px"></p>
+
+        <h2
+          style="
+            color: #ff5555;
+            margin: 0px 0px 15px 0px;
+            text-align: center;
+            display: none;
+          "
+          id="notInServerWarning"
+        >
+          You're not in this server!
+        </h2>
+
+        <div
+          id="accountInfo"
+          class="leaderboardBox lbBox"
+          style="display: none"
+        >
+          <div id="accountPartial" style="display: none">
+            <h2
+              style="
+                text-align: center;
+                color: rgb(255, 85, 85);
+                margin-bottom: 0px;
+              "
+            >
+              There was an error fetching your server info!
+            </h2>
+            <p
+              style="
+                text-align: center;
+                color: rgb(255, 85, 85);
+                margin-top: 2px;
+              "
+            >
+              Information about roles could not be obtained.
+            </p>
+          </div>
+          <div
+            class="accountBox centerflex"
+            style="padding-top: 20px; flex-direction: column; overflow: hidden"
+          >
+            <div class="middleflex" style="margin-bottom: 20px">
+              <img lb="pfp" />
+              <div class="generalInfo">
+                <p lb="name" style="font-weight: bold; font-size: 32px"></p>
+                <p lb="level" style="font-size: 22px"></p>
+              </div>
+            </div>
+
+            <div class="progressBar" style="width: 75%; margin: auto">
+              <div class="progress" lb="progress"></div>
+            </div>
+
+            <div class="middleflex" style="margin-top: 7px">
+              <p lb="xp" style="font-weight: bold"></p>
+              <p lb="percent" style="margin-left: 10px"></p>
+            </div>
+            <p lb="ranking" style="font-size: 20px; margin-top: 0px"></p>
+
+            <hr noshade style="width: 85%; margin-bottom: 20px" />
+
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+              "
+            >
+              <div class="statBox" stat="level">
+                <p>Previous level:</p>
+                <p style="color: lime" lb="prev"></p>
+                <p>XP since previous:</p>
+                <p style="color: lime" lb="sinceprev"></p>
+                <p>XP to level up:</p>
+                <p style="color: lime" lb="tonext"></p>
+              </div>
+
+              <div class="statBox" stat="roles">
+                <p>Top reward role:</p>
+                <p lb="toprole"></p>
+                <p>Reward roles reached:</p>
+                <p lb="totalroles"></p>
+                <p>Multiplier:</p>
+                <p lb="multiplier"></p>
+              </div>
+
+              <div class="statBox" stat="xp">
+                <p>XP per message:</p>
+                <p style="color: aqua" lb="xppermessage"></p>
+                <p>Cooldown:</p>
+                <p style="color: aqua" lb="cooldown"></p>
+                <p>Messages to level up:</p>
+                <p style="color: aqua" lb="messages"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="/polaris.js"></script>
+  <script
+    type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"
+  ></script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-135255146-1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "UA-135255146-1");
+  </script>
+
+  <script>
+    let guildID = window.location.pathname.split("/")[2];
+    let userID = window.location.pathname.split("/")[3];
+
+    function commafy(num) {
+      if (isNaN(num)) return 0;
+      else return num.toLocaleString(undefined, { maximumFractionDigits: 8 });
+    }
+
+    function getLevel(xp, settings) {
+      let lvl = 0;
+      let previousLevel = 0;
+      let xpRequired = 0;
+      while (xp >= xpRequired && lvl <= settings.maxLevel) {
+        lvl++;
+        previousLevel = xpRequired;
+        xpRequired = this.xpForLevel(lvl, settings);
+      }
+      lvl--;
+      let percentage =
+        lvl >= settings.maxLevel
+          ? 100
+          : ((xp - previousLevel) / (xpRequired - previousLevel)) * 100;
+      return { level: lvl, xpRequired, previousLevel, percentage };
+    }
+
+    function xpForLevel(lvl, settings) {
+      if (lvl > settings.maxLevel) lvl = settings.maxLevel;
+      let xpRequired = Object.entries(settings.curve).reduce(
+        (total, n) => total + n[1] * lvl ** n[0],
+        0
+      );
+      return settings.rounding > 1
+        ? settings.rounding * Math.round(xpRequired / settings.rounding)
+        : xpRequired;
+    }
+
+    function roleCol(col, defaultCol = "white") {
+      return col == "#000000" ? defaultCol : col;
+    }
+
+    Fetch(`/api/user/${guildID}/${userID}`)
+      .then((data) => {
+        console.log(data);
+        document.title = `Rank Info for ${data.user.displayName}`;
+        $("#serverName").text(`Rank Info for ${data.user.displayName}`);
+
+        let userLevel = getLevel(data.user.xp || 0, data.settings);
+        let userColor = roleCol(data.user.color);
+
+        $("#accountInfo [lb=pfp]").attr("src", data.user.avatar);
+        $("#accountInfo [lb=name]")
+          .text(data.user.nickname || data.user.displayName)
+          .css("color", userColor);
+        $("#accountInfo [lb=level]")
+          .text(`Level ${commafy(userLevel.level)}`)
+          .css("color", userColor);
+        $("#accountInfo [lb=progress]")
+          .css("background-color", userColor)
+          .css("width", userLevel.percentage + "%");
+        $("#accountInfo [lb=xp]")
+          .text(
+            `${commafy(data.user.xp)} / ${commafy(userLevel.xpRequired)} XP`
+          )
+          .css("color", userColor);
+        $("#accountInfo [lb=percent]")
+          .text(`(${+userLevel.percentage.toFixed(2)}%)`)
+          .css("color", userColor);
+        $("#accountInfo [lb=ranking]").text(
+          `Ranked #${data.user.rank} in ${data.guild.name}`
+        );
+        $("#accountInfo [lb=prev]").text(
+          commafy(userLevel.previousLevel) + " XP"
+        );
+        $("#accountInfo [lb=sinceprev]").text(
+          commafy(data.user.xp - userLevel.previousLevel) + " XP"
+        );
+        $("#accountInfo [lb=tonext]").text(
+          userLevel.level >= data.settings.maxLevel
+            ? "Max level! 🎉"
+            : commafy(Math.max(0, userLevel.xpRequired - data.user.xp)) + " XP"
+        );
+
+        let obtainedRoles = data.settings.rewards
+          .filter((x) => x.level <= userLevel.level)
+          .sort((a, b) => b.level - a.level);
+        let topRole = obtainedRoles[0]
+          ? data.roles.find((x) => x.id == obtainedRoles[0].id)
+          : null;
+
+        $("#accountInfo [lb=toprole]")
+          .text(topRole ? topRole.name : "(none)")
+          .css("color", roleCol((topRole || {}).color));
+        $("#accountInfo [lb=totalroles]")
+          .text(
+            `${commafy(obtainedRoles.length)} / ${commafy(
+              data.settings.rewards.length
+            )}`
+          )
+          .css("color", roleCol((topRole || {}).color));
+        $("#accountInfo [lb=multiplier]").text(
+          data.settings.hideMultipliers ? "Hidden" : "None (1x XP)"
+        );
+
+        $("#everything").show();
+        $("#loading").hide();
+      })
+      .catch((e) => {
+        console.error(e);
+        $("#loading").hide();
+        $("#uhoh").show();
+      });
+  </script>
+</html>
