@@ -124,7 +124,7 @@ module.exports = (client) => {
     next();
   });
 
-  app.get("/status", (req, res) => sendPage(res, "servers"));
+  app.get("/status", (req, res) => sendPage(res, "status"));
   app.get("/servers", (req, res) => sendPage(res, "servers"));
   app.get("/settings/:id", (req, res) => sendPage(res, "config"));
   app.get("/leaderboard/:id", (req, res) => sendPage(res, "leaderboard"));
