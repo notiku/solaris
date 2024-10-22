@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="/css/polaris.css" type="text/css" rel="stylesheet" />
+    <link rel="icon" href="/assets/solaris.png" />
+    <title>Status</title>
+    <meta property="og:title" content="Solaris" />
+    <meta property="og:description" content="An open-source XP bot" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#FF007F" />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <h2 class="middleflex" id="loading">Loading...</h2>
+
+    <div id="everything" style="display: none">
+      <div class="centerflex" style="flex-direction: column">
+        <h2 style="font-size: 30px">Shard Status</h2>
+        <div id="shardStatus" style="padding-bottom: 20px"></div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="/polaris.js"></script>
+  <script
+    type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"
+  ></script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-135255146-1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "UA-135255146-1");
+
+    Fetch("/api/status")
+      .then((data) => {
+        let shardStatus = $("#shardStatus");
+        data.shards.forEach((shard) => {
+          let shardDiv = $("<div>").addClass("shard");
+          shardDiv.append($("<p>").text(`Shard ID: ${shard.id}`));
+          shardDiv.append($("<p>").text(`Status: ${shard.status}`));
+          shardDiv.append($("<p>").text(`Ping: ${shard.ping}ms`));
+          shardDiv.append($("<p>").text(`Guilds: ${shard.guilds}`));
+          shardStatus.append(shardDiv);
+        });
+
+        $("#loading").hide();
+        $("#everything").show();
+      })
+      .catch((e) => {
+        console.error(e);
+        $("#loading").text("Failed to load status.");
+      });
+  </script>
+</html>

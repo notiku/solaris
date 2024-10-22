@@ -124,13 +124,13 @@ module.exports = (client) => {
     next();
   });
 
+  app.get("/status", (req, res) => sendPage(res, "servers"));
   app.get("/servers", (req, res) => sendPage(res, "servers"));
   app.get("/settings/:id", (req, res) => sendPage(res, "config"));
   app.get("/leaderboard/:id", (req, res) => sendPage(res, "leaderboard"));
-  app.get("/user/:guild/:id", (req, res) => sendPage(res, "user"));
   app.get("/", (req, res) => sendPage(res, "home"));
 
-  app.get(["/settings", "/leaderboard", "/servers", "/user"], (req, res) =>
+  app.get(["/settings", "/leaderboard", "/servers"], (req, res) =>
     sendRedirect(res, "/servers")
   );
 
@@ -147,6 +147,24 @@ module.exports = (client) => {
         req.params.id ? `&guild_id=${req.params.id}` : ""
       }`
     );
+  });
+
+  app.get("/api/status", async function (req, res) {
+    try {
+      const shardStatuses = await client.shard.broadcastEval(() => ({
+        id: this.shard.ids[0],
+        status: this.ws.status,
+        ping: this.ws.ping,
+        uptime: this.uptime,
+        guilds: this.guilds.cache.size,
+        users: this.users.cache.size,
+      }));
+
+      res.send({ shards: shardStatuses });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Failed to fetch shard statuses" });
+    }
   });
 
   app.get("/api/loggedin", async function (req, res) {
