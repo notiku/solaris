@@ -10,14 +10,43 @@
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#FF007F" />
     <meta name="twitter:card" content="summary" />
+    <style>
+      .shard {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        color: white;
+        font-weight: bold;
+        position: relative;
+        cursor: pointer;
+      }
+      .shard:hover .tooltip {
+        display: block;
+      }
+      .tooltip {
+        display: none;
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: black;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        white-space: nowrap;
+      }
+    </style>
   </head>
   <body>
     <h2 class="middleflex" id="loading">Loading...</h2>
 
-    <div id="everything" style="display: none">
+    <div id="everything" style="display: none"></div>
       <div class="centerflex" style="flex-direction: column">
         <h2 style="font-size: 30px">Shard Status</h2>
-        <div id="shardStatus" style="padding-bottom: 20px"></div>
+        <div id="shardStatus" style="padding-bottom: 20px; display: flex; flex-wrap: wrap;"></div>
       </div>
     </div>
   </body>
@@ -39,15 +68,27 @@
     gtag("js", new Date());
     gtag("config", "UA-135255146-1");
 
-    Fetch("/api/status")
+    function getColorByPing(ping) {
+      if (ping < 100) return "green";
+      if (ping < 200) return "yellow";
+      return "red";
+    }
+
+    fetch("/api/status")
+      .then((response) => response.json())
       .then((data) => {
         let shardStatus = $("#shardStatus");
         data.shards.forEach((shard) => {
-          let shardDiv = $("<div>").addClass("shard");
-          shardDiv.append($("<p>").text(`Shard ID: ${shard.id}`));
-          shardDiv.append($("<p>").text(`Status: ${shard.status}`));
-          shardDiv.append($("<p>").text(`Ping: ${shard.ping}ms`));
-          shardDiv.append($("<p>").text(`Guilds: ${shard.guilds}`));
+          let shardDiv = $("<div>")
+            .addClass("shard")
+            .css("background-color", getColorByPing(shard.ping))
+            .text(`Shard ${shard.id}`);
+
+          let tooltip = $("<div>")
+            .addClass("tooltip")
+            .html(`Ping: ${shard.ping}ms<br>Guilds: ${shard.guilds}`);
+
+          shardDiv.append(tooltip);
           shardStatus.append(shardDiv);
         });
 
