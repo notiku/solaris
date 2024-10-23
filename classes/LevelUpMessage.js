@@ -95,7 +95,8 @@ class LevelUpMessage {
       }
     } else this.msg = { content: this.subVariables(this.msg) };
 
-    if (this.msg) this.msg.reply = { messageReference: message.id };
+    if (this.msg && settings.levelUp.reply)
+      this.msg.reply = { messageReference: message.id };
   }
 
   subVariables(msg) {

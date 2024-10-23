@@ -28,6 +28,7 @@ const settings = {
 
   levelUp: {
     enabled: { type: "bool", default: false },
+    reply: { type: "bool", default: false },
     embed: { type: "bool", default: false },
     rewardRolesOnly: { type: "bool", default: false },
     message: { type: "string", maxlength: 6000, default: "" },

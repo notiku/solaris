@@ -332,6 +332,13 @@
                 <input db="levelUp.enabled" type="checkbox" saveName="db" onchange="$('.ifmessageenabled').toggle($(this).prop('checked'))">
                 <span class="sliderspan"></span>
             </label>
+
+            <h2>Reply to message</h2>
+            <p class="details">When enabled, it will reply to the message that triggered the level up.</p>
+            <label style="margin-top: 5px"; class="slider">
+                <input db="levelUp.reply" type="checkbox" saveName="db">
+                <span class="sliderspan"></span>
+            </label>
         </div>
         <div class="settingBreak"></div>
 
@@ -539,7 +546,7 @@
             <div class="simpleflex flexTable" id="channelMultipliers"></div>
 
             <h2 style="margin-top: 40px">Stacking</h2>
-            <p class="details">What should be done if a member also has a multiplier role?<br>(XP gain will always be if either multiplier is 0x)</p>
+            <p class="details">What should be done if a member also has a multiplier role?<br>(XP gain will always be 0x if either multiplier is 0x)</p>
             <select db="multipliers.channelStacking" id="channelStacking" desc="channel" class="multiplierSelect" saveName="db">
                 <option value="multiply">Multiply together with role</option>
                 <option value="add">Add together with role</option>
