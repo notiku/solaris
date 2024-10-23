@@ -12,8 +12,8 @@
     <meta name="twitter:card" content="summary" />
     <style>
       .shard {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -22,6 +22,7 @@
         font-weight: bold;
         position: relative;
         cursor: pointer;
+        border-radius: 50%;
       }
       .shard:hover .tooltip {
         display: block;
@@ -32,7 +33,7 @@
         bottom: 110%;
         left: 50%;
         transform: translateX(-50%);
-        background-color: black;
+        background-color: rgba(0, 0, 0, 0.8);
         color: white;
         padding: 5px;
         border-radius: 5px;
@@ -44,7 +45,7 @@
     <h2 class="middleflex" id="loading">Loading...</h2>
 
     <div id="everything" style="display: none"></div>
-      <div class="centerflex" style="flex-direction: column">
+      <div class="centerflex" style="flex-direction: column"></div>
         <h2 style="font-size: 30px">Shard Status</h2>
         <div id="shardStatus" style="padding-bottom: 20px; display: flex; flex-wrap: wrap;"></div>
       </div>
@@ -69,9 +70,9 @@
     gtag("config", "UA-135255146-1");
 
     function getColorByPing(ping) {
-      if (ping < 100) return "green";
-      if (ping < 200) return "yellow";
-      return "red";
+      if (ping < 100) return "#4CAF50"; // Green
+      if (ping < 200) return "#FFEB3B"; // Yellow
+      return "#F44336"; // Red
     }
 
     fetch("/api/status")
@@ -86,7 +87,7 @@
 
           let tooltip = $("<div>")
             .addClass("tooltip")
-            .html(`Ping: ${shard.ping}ms<br>Guilds: ${shard.guilds}`);
+            .html(`Ping: ${shard.ping}ms<br>Guilds: ${shard.guilds}<br>Uptime: ${shard.uptime}`);
 
           shardDiv.append(tooltip);
           shardStatus.append(shardDiv);
