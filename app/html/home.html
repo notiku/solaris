@@ -105,7 +105,10 @@
       .then((data) => {
         if (!data || !data.login || !data.login.id)
           $("#manageButton").text("Log in");
-        if (data && data.botPublic) $("#addLink").show();
+        if (data && data.botPublic) {
+          $("#addLink").show();
+          $("#statusLink").show();
+        }
         $("#manageLink").show();
       })
       .catch(() => {
