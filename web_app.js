@@ -714,7 +714,7 @@ module.exports = (client) => {
     if (!foundGuild && isDev) return res.apiError("Not in server!");
 
     let canManage = canManageServer(foundGuild);
-    if (!canManage && isDev)
+    if (!canManage && !isDev)
       return res.apiError("Manage server permission required!");
 
     let importSettings = req.body.import || {};
