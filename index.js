@@ -162,7 +162,7 @@ client.on("interactionCreate", async (int) => {
   if (foundCommand.metadata.dev && !tools.isDev())
     return tools.warn("Only developers can use this!");
   else if (config.lockBotToDevOnly && !tools.isDev())
-    return tools.warn("Only developers can use this bot!");
+    return tools.warn("The bot is currently in maintenance mode!");
 
   try {
     await foundCommand.run(client, int, tools);
