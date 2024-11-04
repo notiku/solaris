@@ -50,15 +50,6 @@
                 Manage servers
               </button>
             </a>
-            <a
-              style="display: none"
-              href="./status"
-              tabindex="-1"
-              target="_blank"
-              id="statusLink"
-            >
-              <button class="fancybutton">Status</button>
-            </a>
           </div>
         </div>
       </div>
@@ -107,7 +98,6 @@
           $("#manageButton").text("Log in");
         if (data && data.botPublic) {
           $("#addLink").show();
-          $("#statusLink").show();
         }
         $("#manageLink").show();
       })
