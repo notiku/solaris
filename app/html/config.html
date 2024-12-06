@@ -320,6 +320,7 @@
         </div>
     </div>
 
+
     <div class="configboxes" tab="levelup" style="display: none">
         <div class="settingBox box fulllength">
             <h1>Level up message</h1>
@@ -329,6 +330,13 @@
             <p class="details">When enabled, a message or DM will be sent whenever anyone levels up.</p>
             <label style="margin-top: 5px"; class="slider">
                 <input db="levelUp.enabled" type="checkbox" saveName="db" onchange="$('.ifmessageenabled').toggle($(this).prop('checked'))">
+                <span class="sliderspan"></span>
+            </label>
+
+            <h2>Reply to message</h2>
+            <p class="details">When enabled, it will reply to the message that triggered the level up.</p>
+            <label style="margin-top: 5px"; class="slider">
+                <input db="levelUp.reply" type="checkbox" saveName="db">
                 <span class="sliderspan"></span>
             </label>
         </div>
@@ -439,15 +447,7 @@
                         <span class="sliderspan"></span>
                     </label>
                 </div>
-
-                <div class="sideoption">
-                    <h2>Reply to message</h2>
-                    <p class="details">When enabled, it will reply to the message that triggered the level up.</p>
-                    <label style="margin-top: 5px"; class="slider">
-                        <input db="levelUp.reply" type="checkbox" saveName="db">
-                        <span class="sliderspan"></span>
-                    </label>
-                </div>
+            </div>
         </div>
         <div class="settingBreak"></div>
         
