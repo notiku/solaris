@@ -844,7 +844,7 @@ module.exports = (client) => {
       if (!x || !x[0] || !x[1].xp || x[1].xp <= 0) return;
       let isHidden =
         x[1].hidden ||
-        (settings.leaderboard.hidden &&
+        (settings.leaderboard.hideNonMembers &&
           !guildInfo.find((x) => x.id == guildID));
       if (!isHidden) xpArray.push(x);
       else if (isMod || isDev) hiddenMembers.push({ id: x[0], xp: x[1].xp });
