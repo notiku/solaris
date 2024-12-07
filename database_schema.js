@@ -91,6 +91,7 @@ const settings = {
   leaderboard: {
     disabled: { type: "bool", default: false },
     private: { type: "bool", default: false },
+    hideNonMembers: { type: "bool", default: false },
     hideRoles: { type: "bool", default: false },
     maxEntries: { type: "int", default: 0, min: 0, max: 1000000 },
     minLevel: { type: "int", default: 0, min: 0, max: 1000 },

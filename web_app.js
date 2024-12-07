@@ -842,7 +842,10 @@ module.exports = (client) => {
 
     Object.entries(data.users || {}).forEach((x) => {
       if (!x || !x[0] || !x[1].xp || x[1].xp <= 0) return;
-      let isHidden = x[1].hidden;
+      let isHidden =
+        x[1].hidden ||
+        (settings.leaderboard.hidden &&
+          !guildInfo.find((x) => x.id == guildID));
       if (!isHidden) xpArray.push(x);
       else if (isMod || isDev) hiddenMembers.push({ id: x[0], xp: x[1].xp });
     });
