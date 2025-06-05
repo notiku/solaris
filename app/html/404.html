@@ -3,49 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <link href="/css/polaris.css" type="text/css" rel="stylesheet">
-    <link rel="icon" href="/assets/polaris.svg">
+    <link rel="icon" href="/assets/solaris.svg">
     <title>Nowhere</title>
-    <meta name="theme-color" content="#00ff80">
+    <meta name="theme-color" content="#ff007f">
     <style>
         #fumo {
            user-select: none;
            -webkit-user-select: none;
            -webkit-user-drag: none;
-           -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+           -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
            -moz-user-drag: none;
            -moz-user-select: none;
         }
-  
+
         #noThoughts {
            width: fit-content;
            margin: auto;
            cursor: pointer;
            transform: scale(0.94);
         }
-  
+
         #noThoughts:hover {
            animation: brrr 0.2s;
            animation-iteration-count: infinite;
            transition-duration: 0.05s;
         }
-  
+
         #noThoughts:active, .hell {
            animation: hyperbrrr 0.06s !important;
            animation-iteration-count: infinite !important;
            filter: saturate(200%) blur(1.5px) !important;
         }
-  
+
         .headEmpty {
            position: absolute;
            bottom: 0px;
            height: 200%;
            width: 42%;
         }
-  
+
         .mirror {
            transform: scaleX(-1);
         }
-  
+
         @keyframes brrr {
            0% { transform: translate(1px, 1px) rotate(0deg); }
            10% { transform: translate(-1px, -2px) rotate(-1deg); }

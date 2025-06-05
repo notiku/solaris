@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;700;800&display=swap");
 
 html {
     --bg: #202020;
@@ -11,18 +11,18 @@ html {
     --lightestfg: #808080;
 
     --lato: Lato, Arial, Helvetica, sans-serif;
-    --opensans: 'Open Sans', --lato;
+    --opensans: "Open Sans", --lato;
 
-    --emojired: #DD2E44;
-    --emojiyellow: #F4900C;
-    --emojigreen: #77B255;
-    --emojiblue: #3B88C3;
-    --emojipurple: #9266CC;
+    --emojired: #dd2e44;
+    --emojiyellow: #f4900c;
+    --emojigreen: #77b255;
+    --emojiblue: #3b88c3;
+    --emojipurple: #9266cc;
 
     --defaultrolecol: #dddddd;
 
     --colon: #ff8000;
-    --polarisgreen: #00ff80;
+    --polarisgreen: #ff007f;
 
     --sliderwidth: 60px;
     --sliderheight: 32px;
@@ -36,7 +36,10 @@ body {
     margin: 0px 0px;
 }
 
-p, h1, h2, button {
+p,
+h1,
+h2,
+button {
     font-family: var(--lato);
     color: white;
 }
@@ -47,7 +50,8 @@ p {
     line-height: 28px;
 }
 
-h1, h2 {
+h1,
+h2 {
     font-family: var(--opensans);
     font-weight: 800;
     font-size: 36px;
@@ -65,7 +69,9 @@ a {
     color: aqua !important;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     font-family: var(--lato);
     background-color: var(--evenlighterfg);
     border: 1px solid black;
@@ -81,7 +87,8 @@ input[type="number"] {
     width: 125px;
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
     color: white;
     opacity: 50%;
 }
@@ -123,8 +130,12 @@ button {
     background-color: var(--emojiblue);
 }
 
-button:hover { filter: brightness(115%) }
-button:active { filter: brightness(125%) }
+button:hover {
+    filter: brightness(115%);
+}
+button:active {
+    filter: brightness(125%);
+}
 
 button:disabled {
     cursor: not-allowed;
@@ -142,7 +153,8 @@ button:disabled {
     padding: 5px 20px;
 }
 
-.fancybutton:hover, .fancybutton:focus-visible {
+.fancybutton:hover,
+.fancybutton:focus-visible {
     background-color: var(--polarisgreen);
     color: black;
 }
@@ -155,7 +167,8 @@ button:disabled {
     opacity: 66%;
 }
 
-.boringbutton:hover, .boringbutton:focus-visible {
+.boringbutton:hover,
+.boringbutton:focus-visible {
     opacity: 100%;
 }
 
@@ -190,8 +203,16 @@ textarea {
     pointer-events: none;
 }
 
-.canfocus:focus-visible, input:focus, button:focus-visible, textarea:focus, select:focus, input[type=range]:focus-visible,
-[contenteditable]:focus, #sidebar .category:focus-visible, .flexTable div p:focus-visible, .colInputPreview:focus-visible,
+.canfocus:focus-visible,
+input:focus,
+button:focus-visible,
+textarea:focus,
+select:focus,
+input[type="range"]:focus-visible,
+[contenteditable]:focus,
+#sidebar .category:focus-visible,
+.flexTable div p:focus-visible,
+.colInputPreview:focus-visible,
 .leaderboardSlot.canManage:focus-visible {
     outline: 2px solid var(--colon);
 }
@@ -219,11 +240,14 @@ textarea {
 }
 
 .popup {
-    position: fixed; 
-    display: none; 
+    position: fixed;
+    display: none;
     width: 100%;
     height: 100%;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.66);
     z-index: 2;
     text-align: center;
@@ -252,18 +276,21 @@ textarea {
     position: absolute;
     cursor: pointer;
     margin: 0px 0px !important;
-    top: 0; left: 0; right: 0; bottom: 0; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: #aaaaaa;
     transition-duration: 0.25s;
     transition-timing-function: ease-in-out;
     border-radius: 420px;
 }
-  
+
 .sliderspan:before {
     position: absolute;
     content: "";
-    height: calc(var(--sliderheight) - var(--sliderpadding) );
-    width: calc(var(--sliderheight) - var(--sliderpadding) );
+    height: calc(var(--sliderheight) - var(--sliderpadding));
+    width: calc(var(--sliderheight) - var(--sliderpadding));
     left: var(--sliderpadding);
     bottom: calc(var(--sliderpadding) * 0.5);
     background-color: white;
@@ -271,13 +298,15 @@ textarea {
     transition-timing-function: ease-in-out;
     border-radius: 420px;
 }
-  
+
 input:checked + .sliderspan {
     background-color: var(--colon);
 }
-  
+
 input:checked + .sliderspan:before {
-    transform: translateX(calc(var(--sliderwidth) - var(--sliderheight) - (var(--sliderpadding))));
+    transform: translateX(
+        calc(var(--sliderwidth) - var(--sliderheight) - (var(--sliderpadding)))
+    );
 }
 
 .box {
@@ -312,7 +341,8 @@ input:checked + .sliderspan:before {
     transition-duration: 0.1s;
 }
 
-.categoryBox:hover, .categoryBox:focus-visible {
+.categoryBox:hover,
+.categoryBox:focus-visible {
     background-color: var(--lightererfg);
 }
 
@@ -350,7 +380,7 @@ input:checked + .sliderspan:before {
 .middleflex {
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .spacedflex * {
@@ -408,7 +438,8 @@ input:checked + .sliderspan:before {
     transition-duration: 0.1s;
 }
 
-#header div:hover h2, #header div:focus-visible h2 {
+#header div:hover h2,
+#header div:focus-visible h2 {
     color: var(--polarisgreen);
 }
 
@@ -454,7 +485,7 @@ input:checked + .sliderspan:before {
     cursor: pointer;
 }
 
-#sidebar div:focus-visible  {
+#sidebar div:focus-visible {
     background: rgba(255, 255, 255, 0.05);
 }
 
@@ -568,9 +599,13 @@ input:checked + .sliderspan:before {
     cursor: pointer;
 }
 
-#rewards div p:hover:not(:first-child) { background-color: var(--waylighterfg); }
+#rewards div p:hover:not(:first-child) {
+    background-color: var(--waylighterfg);
+}
 
-.deleteRow:hover { background-color: var(--emojired) !important }
+.deleteRow:hover {
+    background-color: var(--emojired) !important;
+}
 
 .toggleRow:hover {
     cursor: pointer;
@@ -601,11 +636,12 @@ input:checked + .sliderspan:before {
     transition-duration: 0.1s;
 }
 
-.serverOption:hover, .serverOption:focus-visible {
+.serverOption:hover,
+.serverOption:focus-visible {
     background-color: var(--lightererfg);
 }
 
-.serverOption img[sv=icon] {
+.serverOption img[sv="icon"] {
     height: 65px;
     border-radius: 420px;
     margin-left: 10px;
@@ -633,7 +669,8 @@ input:checked + .sliderspan:before {
     display: none;
 }
 
-.serverOption .serverIcons a:hover, .serverOption .serverIcons a:focus-visible {
+.serverOption .serverIcons a:hover,
+.serverOption .serverIcons a:focus-visible {
     transform: scale(1.1);
 }
 
@@ -683,7 +720,8 @@ input:checked + .sliderspan:before {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.leaderboardSlot.canManage:hover, .leaderboardSlot.canManage:focus-visible {
+.leaderboardSlot.canManage:hover,
+.leaderboardSlot.canManage:focus-visible {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -711,7 +749,7 @@ input:checked + .sliderspan:before {
     white-space: nowrap;
 }
 
-.leaderboardSlot h2[lb=rank] {
+.leaderboardSlot h2[lb="rank"] {
     margin: 0px 0px;
     width: 200px;
     text-align: center;
@@ -754,7 +792,9 @@ input:checked + .sliderspan:before {
     margin: 0px 0px;
     font-size: 18px;
     font-weight: bold;
-    text-shadow: 0.5px 0.5px 3px black, 0.5px 0.5px 3px black;
+    text-shadow:
+        0.5px 0.5px 3px black,
+        0.5px 0.5px 3px black;
     white-space: nowrap;
 }
 
@@ -766,7 +806,7 @@ input:checked + .sliderspan:before {
     display: none;
 }
 
-.leaderboardSlot p[lb=multiplier] {
+.leaderboardSlot p[lb="multiplier"] {
     font-size: 15px;
 }
 
@@ -774,7 +814,7 @@ input:checked + .sliderspan:before {
     font-size: 22px;
 }
 
-.accountBox img[lb=pfp] {
+.accountBox img[lb="pfp"] {
     border-radius: 420px;
     height: 100px;
     margin-right: 25px;
@@ -830,7 +870,7 @@ input:checked + .sliderspan:before {
     font-weight: bold;
     color: var(--polarisgreen);
     cursor: pointer;
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
 #lbButtons button {
@@ -847,13 +887,13 @@ input:checked + .sliderspan:before {
     display: none;
     opacity: 50%;
     font-size: 16px;
-    margin-top: 0px
+    margin-top: 0px;
 }
 
 #uhoh #loginbutton {
     display: none;
     background-color: var(--emojipurple);
-    margin-top: 5p
+    margin-top: 5p;
 }
 
 .coolthing {
@@ -892,7 +932,9 @@ input:checked + .sliderspan:before {
     opacity: 75%;
 }
 
-.red { color: red }
+.red {
+    color: red;
+}
 
 /* @media screen and (max-width: 800px) {
     #sidebar { width: 62px; min-width: 62px; }

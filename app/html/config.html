@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link href="/css/polaris.css?v=3" type="text/css" rel="stylesheet">
-    <link rel="icon" href="/assets/polaris.svg">
-    <title>Polaris</title>
+    <link rel="icon" href="/assets/solaris.svg">
+    <title>Solaris</title>
 
-    <meta property="og:title" content="Polaris">
-    <meta property="og:description" content="An open-source XP bot">
+    <meta property="og:title" content="Solaris">
+    <meta property="og:description" content="An open-source and highly customizable leveling bot">
     <meta property="og:type" content="website">
-    <meta name="theme-color" content="#00ff80">
+    <meta name="theme-color" content="#ff007f">
     <meta name="twitter:card" content="summary">
     <meta name="robots" content="noindex">
 </head>
@@ -154,7 +154,7 @@
             <h1>Level Scaling</h1>
             <p>By gaining enough XP, members can level up and earn special roles or bragging rights.
                 The amount of XP required scales with each level - early levels only need a couple thousand points but later levels need millions.</p>
-            
+
             <p>You can adjust the level scaling to change how many more points are required with each level.
                 A smaller curve makes it easier to level up and a larger curve makes it much more difficult.</p>
 
@@ -185,12 +185,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="simpleflex">
                 <div>
                     <h2 style="margin-bottom: 12px">Preview</h2>
                     <div class="simpleflex flexTable" id="curvePreview"></div>
-    
+
                     <button style="margin-top: 16px; width: 140px" id="showMoreCurveInfo">More info</button>
                 </div>
 
@@ -310,7 +310,7 @@
                 <div class="sideoptions">
                     <h2>Advanced: Exclude roles</h2>
                     <p class="details">Prevent certain roles from being re-added or removed when syncing.</p>
-        
+
                     <label style="margin-top: 5px"; class="slider">
                         <input type="checkbox" tabindex="0" id="excludeRewardToggle">
                         <span class="sliderspan"></span>
@@ -338,13 +338,13 @@
         <div class="settingBox box fulllength ifmessageenabled">
 
             <div id="regularMessage">
-                <h1>Message</h1>                  
+                <h1>Message</h1>
                 <p>The message to send upon levelling up.</p>
                 <textarea class="lvlTextbox" id="lvlUpMessage" style="width: 800px" placeholder="(no message)" saveName="levelUp.message"></textarea>
             </div>
 
             <div id="embedMessage">
-                <h1>Embed</h1>                  
+                <h1>Embed</h1>
                 <p>The embedded message to send upon levelling up.</p>
                 <p><b>Step 1: </b> <a target="_blank" href="https://discohook.org/?data=eyJtZXNzYWdlcyI6W3siZGF0YSI6eyJjb250ZW50IjpudWxsLCJlbWJlZHMiOlt7InRpdGxlIjoi4pyoIExldmVsIHVwISIsImRlc2NyaXB0aW9uIjoiKipbW1VTRVJOQU1FXV0qKiBoYXMgcmVhY2hlZCBsZXZlbCAqKltbTEVWRUxdXSoqISBDb25ncmF0dWxhdGlvbnMhIiwiY29sb3IiOjE2NzQ0NDQ4LCJmb290ZXIiOnsidGV4dCI6IlRoZXkgbm93IGhhdmUgW1tYUF1dIFhQIn19XSwiYXR0YWNobWVudHMiOltdfX1dfQ">Generate an embed here!</a></p>
                 <p><b>Step 2: </b> Open the JSON data by pressing 'JSON Data Editor' at the bottom of the site</p>
@@ -355,7 +355,7 @@
             </div>
 
             <div class="simpleflex">
-                <div class="sideoption"> 
+                <div class="sideoption">
                     <h2>Variables</h2>
                     <p class="details">Spice up your message with dynamic variables!</p>
 
@@ -368,7 +368,7 @@
                             <option value="[[NEXT_LEVEL]]">Next level (e.g. 11)</option>
                             <option value="[[NEXT_XP]]">XP to next level (e.g. 1,000)</option>
                         </select>
-        
+
                         <select>
                             <option value="x" selected disabled>Member</option>
                             <option value="[[@]]">@mention (e.g. @Polaris)</option>
@@ -378,7 +378,7 @@
                             <option value="[[NICKNAME]]">Nickname</option>
                             <option value="[[AVATAR]]">Avatar URL</option>
                         </select>
-        
+
                         <select>
                             <option value="x" selected disabled>Server</option>
                             <option value="[[SERVER]]">Server name</option>
@@ -388,7 +388,7 @@
                             <option value="[[CHANNEL_NAME]]">Channel name (e.g. channel)</option>
                             <option value="[[CHANNEL_ID]]">Channel ID</option>
                         </select>
-        
+
                         <select>
                             <option value="x" selected disabled>Advanced</option>
                             <!-- <option value="[[DISCRIM]]">Account Discriminator (e.g. 6880)</option> -->
@@ -409,7 +409,7 @@
                     </div>
                 </div>
 
-                <div class="sideoption"> 
+                <div class="sideoption">
                     <h2>Example</h2>
                     <p class="exampleP details" id="exampleInfo">Send a test message to see if everything is working correctly</p>
                     <p class="details" id="sendingExample" style="display: none">Sending...</p>
@@ -423,7 +423,7 @@
             </div>
 
             <div class="simpleflex" style="margin-top: 15px">
-                <div class="sideoption"> 
+                <div class="sideoption">
                     <h2>Channel</h2>
                     <p class="details">Which channel should the message be sent in?</p>
                     <select id="lvlMessageSelect" saveName="levelUp.channel">
@@ -432,7 +432,7 @@
                     </select>
                 </div>
 
-                <div class="sideoption"> 
+                <div class="sideoption">
                     <h2>Embed mode</h2>
                     <p class="details">Send a fancy embed instead of a normal message (advanced!)</p>
                     <label style="margin-top: 5px"; class="slider">
@@ -443,7 +443,7 @@
             </div>
         </div>
         <div class="settingBreak"></div>
-        
+
         <div class="settingBox box fulllength ifmessageenabled">
             <h1>Interval</h1>
             <p class=>How often the message should be sent (e.g. every 3rd level)</p>
@@ -473,7 +473,7 @@
                 </div>
             </div>
 
-            <div class="sideoption"> 
+            <div class="sideoption">
                 <h2>Reward roles only</h2>
                 <p class="details">Only send the level up message when obtaining a new reward role</p>
                 <label style="margin-top: 5px"; class="slider">
@@ -566,7 +566,7 @@
             </label>
         </div>
         <div class="settingBreak"></div>
-        
+
         <div class="settingBox box ifrankenabled">
             <h2>Hide cooldown</h2>
             <p class="details">Prevents members from viewing the amount of time until they can gain XP again.</p>
@@ -726,7 +726,7 @@
             <div class="importdiv" importtype="json">
                 <p class="details">Copies XP and settings from another server using this bot. <b>Requires server owner</b></p>
                 <p class="details">The expected .json format is the same as when you press "download all data" at the top of this</p>
-                
+
                 <div class="centerflex spacedflex">
                     <p>Import from:</p>
                     <input type="file" id="importJSONFile" accept="application/json" style="padding-top: 15px; width: 500px; margin: 10px 0px"></select>
@@ -782,9 +782,9 @@
             <div style="display: none" id="botimportloading">
                 <p><b>Working on it...</b></p>
             </div>
-            
+
         </div>
-        
+
     </div>
 
     <div class="configboxes" tab="advanced" style="display: none">
@@ -821,9 +821,9 @@
                 </label>
 
                 <div id="customEmbedColRankConfig" class="centerflex" style="display: none">
-                    <input style="width: 100px; margin-left: 20px" class="colorInput" for="customEmbedColRank" maxlength="7" value="#00ff80" placeholder="#00ff80">
+                    <input style="width: 100px; margin-left: 20px" class="colorInput" for="customEmbedColRank" maxlength="7" value="#ff007f" placeholder="#ff007f">
                     <div style="margin-left: 10px" class="colInputPreview" for="customEmbedColRank" tabindex="0"></div>
-                    <input class="hiddenColInput previewColorInput" value="#00ff80" type="color" id="customEmbedColRank" db="rankCard.embedColor" saveName="db" useIf="useCustomEmbedColRank">
+                    <input class="hiddenColInput previewColorInput" value="#ff007f" type="color" id="customEmbedColRank" db="rankCard.embedColor" saveName="db" useIf="useCustomEmbedColRank">
                 </div>
             </div>
         </div>
@@ -838,9 +838,9 @@
                 </label>
 
                 <div id="customEmbedColTopConfig" class="centerflex" style="display: none">
-                    <input style="width: 100px; margin-left: 20px" class="colorInput" for="customEmbedColTop" maxlength="7" value="#00ff80" placeholder="#00ff80">
+                    <input style="width: 100px; margin-left: 20px" class="colorInput" for="customEmbedColTop" maxlength="7" value="#ff007f" placeholder="#ff007f">
                     <div style="margin-left: 10px" class="colInputPreview" for="customEmbedColTop" tabindex="0"></div>
-                    <input class="hiddenColInput previewColorInput" value="#00ff80" type="color" id="customEmbedColTop" db="leaderboard.embedColor" saveName="db" useIf="useCustomEmbedColTop">
+                    <input class="hiddenColInput previewColorInput" value="#ff007f" type="color" id="customEmbedColTop" db="leaderboard.embedColor" saveName="db" useIf="useCustomEmbedColTop">
                 </div>
             </div>
         </div>
@@ -920,7 +920,7 @@
         $('.serverMembers').text(commafy(data.guild.members || "?") + " member" + (data.guild.members == 1 ? "" : "s"))
         $('.serverIcon').attr('src', data.guild.icon || "/assets/avatar.png")
         $('#otherServers').append(data.ownedServers.map(x => `<option value="${x.id}">${x.name}</option>`))
-        
+
         // fill in inputs with current values
         $('input[db], select[db]').each(function() {
             let dbKey = $(this).attr('db').split('.')
@@ -929,7 +929,7 @@
             if ($(this).attr('type') == "checkbox") $(this).prop("checked", $(this).attr("invert") ? !dbVal : dbVal)
             else $(this).val(dbVal || dbVal === 0 ? dbVal : $(this).attr('default'))
         })
-        
+
         // number placeholders, show range
         $('input[type="number"][min][max]').each(function() {
             if (!$(this).attr("placeholder")) $(this).attr("placeholder", `${$(this).attr("min")} - ${$(this).attr("max")}`)
@@ -962,7 +962,7 @@
             if (val >= 60) {
                 $('#cooldownunit').text(`(${timeStr(val * 1000, 1)})`)
                 $('#cooldownunit').show()
-            }   
+            }
             else $('#cooldownunit').hide()
         })
         $('#num_time').trigger('change')
@@ -1054,7 +1054,7 @@
 
             element.empty();
             element.append(columns.map(x => `<div col="${x.id}"><p><b>${x.name}</b></p></div>`))
-            
+
             levels.forEach(lvl => {
 
                 let xpRequired = getXPForLevel(lvl, curve, rounding)
@@ -1109,7 +1109,7 @@
             cSlot.addClass('categoryShortcut').attr('category', $(this).attr('category'))
             $('#serverInfo').append(cSlot)
         })
-        
+
         // on category change
         $('.category').on("click keydown", function(e) {
             if (ignoreTabPress(e)) return
@@ -1311,7 +1311,7 @@
             $(`#roleMultiplierSelect option[value=${foundReward.id}]`).prop('hidden', false)
             buildRoleMultiplerTable()
         })
-        
+
         // multiplier role - edit amount
             $(document).on('blur', '.roleMultiplierAmount', function() {
             let foundMultiplier = roleMultipliers.find(x => x.id == $(this).attr("roleID"))
@@ -1369,7 +1369,7 @@
             $(`#channelMultiplierSelect option[value=${foundReward.id}]`).prop('hidden', false)
             buildChannelMultiplierTable()
         })
-        
+
         // multiplier channel - edit amount
             $(document).on('blur', '.channelMultiplierAmount', function() {
             let foundMultiplier = channelMultipliers.find(x => x.id == $(this).attr("channelID"))
@@ -1428,7 +1428,7 @@
             let cursor = textbox[0].selectionStart;
             textbox.val(textbox.val().slice(0, cursor) + text + textbox.val().slice(cursor))
             textbox.focus();
-            textbox[0].selectionStart = textbox[0].selectionEnd = cursor + text.length; 
+            textbox[0].selectionStart = textbox[0].selectionEnd = cursor + text.length;
         })
 
         $('.multiplierSelect').change(function() {
@@ -1468,7 +1468,7 @@
 
         toggleEmbedColorDiv(db.rankCard.embedColor, "customEmbedColRank", "useCustomEmbedColRank")
         toggleEmbedColorDiv(db.leaderboard.embedColor, "customEmbedColTop", "useCustomEmbedColTop")
-        
+
         $('.leaderboardLink').attr("href", "/leaderboard/" + data.guild.id)
 
         if (data.guild.botDev) $('.forDevs').removeAttr('disabled')
@@ -1498,7 +1498,7 @@
 
                     default:
                         settings[property] = val
-                        
+
                 }
             })
 
@@ -1540,7 +1540,7 @@
             $('#errorfooter').text(e.message)
             $('#errorhelp').show()
         }
-        
+
         $('#loading').hide()
         $('#uhoh').show()
     })
@@ -1583,7 +1583,7 @@
     }
 
     // check if unsaved changes were made
-    function hasUnsavedChanges() { 
+    function hasUnsavedChanges() {
         return lastSavedData != JSON.stringify(generateSaveJSON())
     }
 
@@ -1606,7 +1606,7 @@
     }
 
     function validateEmbedJSON() {
-        try { 
+        try {
             let jsonTest = JSON.parse($('#lvlUpEmbed').val()).embeds[0]
             if (Array.isArray(jsonTest) || typeof jsonTest != "object") return false
             else return true
@@ -1617,7 +1617,7 @@
     $('[saveName]').change(checkUnsavedChanges)
 
     $(document).on("input blur", 'input[type=number], .numberinput', function(e) {
-        
+
         let isInput = e.target.nodeName == "INPUT"
         let rawVal = isInput ? $(this).val() : $(this).text()
         let val = Number(rawVal)
@@ -1629,7 +1629,7 @@
 
         if (!rawVal.length) cleanVal = isNaN(def) ? "" : def
         else if (!isNaN(min) && val < min) cleanVal = min
-        else if (!isNaN(max) && val > max) cleanVal = max 
+        else if (!isNaN(max) && val > max) cleanVal = max
 
         if (e.type == "input" && cleanVal != val) $(this).addClass('red')
         else $(this).removeClass('red')
@@ -1758,7 +1758,7 @@
         if (embedMode && !validateEmbedJSON()) return alert("Invalid level up embed data! Please fix it or remove it before testing.")
         else if (!saveData['levelUp.message']) return
         else requestInProgress = true
-        
+
         $('.exampleP').hide()
         $('#sendingExample').show()
 
@@ -1804,7 +1804,7 @@
             if (res.matches < 1) return alert(`Nobody in your server has less than ${amt} XP!`)
 
             if (confirm(`Are you sure you want to prune? This will wipe ${commafy(res.matches)} user${res.matches == 1 ? "" : "s"}, leaving ${commafy(res.total - res.matches)} left.`)) {
-                
+
                 requestInProgress = true
 
                 $.ajax({
@@ -1900,7 +1900,7 @@
             if (e.responseJSON && e.responseJSON.apiError) {
                 let isJSON = (importBot == "json")
                 if (e.responseJSON.code == "noData") alert(isJSON ? "No server or XP data was found!" : "This server doesn't have any data!")
-                else alert("Error while trying to import data!\n" + e.responseJSON.message)  
+                else alert("Error while trying to import data!\n" + e.responseJSON.message)
                 if (e.responseJSON.code != "importCooldown" && e.responseJSON.code != "invalidImport") {
                     if (!isJSON) failedImports.push(importBot)
                     setTimeout(() => {
@@ -1909,7 +1909,7 @@
                 }
             }
             else {
-                alert("Error while trying to import data!\n" + e.message)  
+                alert("Error while trying to import data!\n" + e.message)
             }
             console.error(e)
         })
