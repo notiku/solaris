@@ -1,6 +1,6 @@
 module.exports = {
-metadata: {
+  metadata: {
     name: "View on leaderboard",
-    slashEquivalent: "top"
-}
-}
+    slashEquivalent: "top",
+  },
+};
